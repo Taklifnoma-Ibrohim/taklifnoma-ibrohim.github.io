@@ -12,6 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Marck+Script&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="img/bouquet.webp" type="image/webp">
   <link rel="preload" as="image" href="img/paper.webp" type="image/webp">
+  <link rel="preload" as="image" href="img/window-frame.webp" type="image/webp">
   <link rel="preload" as="image" href="img/seal.webp" type="image/webp">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -64,11 +65,12 @@
     <section class="hero">
       <p class="bismillah reveal" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
       <p class="eyebrow reveal" style="--d:.2s" data-t="heroEyebrow">To‘yga taklifnoma</p>
-      <div class="arch reveal" style="--d:.35s">
+      <div class="arch win reveal" style="--d:.35s">
+        <div class="win__view" aria-hidden="true"></div>
+        <img class="win__frame" src="img/window-frame.webp" alt="" aria-hidden="true" decoding="async">
         <img class="arch__flowers arch__flowers--tl" src="img/bouquet.webp" alt="" aria-hidden="true" decoding="async">
         <img class="arch__flowers arch__flowers--br" src="img/bouquet.webp" alt="" aria-hidden="true" decoding="async">
-        <div class="arch__inner window">
-          <img class="garland arch__garland" src="img/garland.webp" alt="" aria-hidden="true" decoding="async">
+        <div class="win__content">
           <h1 class="names">
             <span class="reveal" style="--d:.7s" data-t="groom">Ibrohim</span>
             <span class="amp reveal" style="--d:1s" data-t="amp">&amp;</span>
