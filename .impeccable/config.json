@@ -1,0 +1,41 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-06T12:18:08.074Z",
+        "reason": "Claude: ivory paper background is the intended look of a printed-style wedding invitation"
+      },
+      {
+        "rule": "pulsing-dot",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-06T12:18:08.254Z",
+        "reason": "Claude: literal scroll-down cue on hero, not a fake live indicator"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-06T12:18:08.454Z",
+        "reason": "Claude: countdown cells are centered numerals separated by thin divider lines, no text touches the border"
+      },
+      {
+        "rule": "overused-font",
+        "value": "montserrat",
+        "createdAt": "2026-11-06T12:18:08.646Z",
+        "reason": "Claude: used only for tiny tracked labels beside Cormorant/Marck Script display faces"
+      }
+    ]
+  }
+}

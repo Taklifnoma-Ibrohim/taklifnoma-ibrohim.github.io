@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Приглашение на свадьбу</title>
+  <meta name="description" content="Приглашаем вас разделить с нами день нашей свадьбы">
+  <meta name="theme-color" content="#f6f1e8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Marck+Script&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="locked">
+
+  <!-- ============ КОНВЕРТ (заставка) ============ -->
+  <div class="intro" id="intro" role="dialog" aria-label="Открыть приглашение">
+    <div class="envelope" id="envelope">
+      <div class="envelope__back"></div>
+      <div class="envelope__letter">
+        <span class="script">Вы приглашены</span>
+      </div>
+      <div class="envelope__front"></div>
+      <div class="envelope__flap"></div>
+      <button class="seal" id="openBtn" aria-label="Открыть приглашение">
+        <span id="sealInitials">И&amp;И</span>
+      </button>
+    </div>
+    <p class="intro__hint">Нажмите на печать, чтобы открыть</p>
+  </div>
+
+  <!-- ============ МУЗЫКА ============ -->
+  <button class="music" id="musicBtn" aria-label="Музыка" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+  </button>
+  <audio id="audio" preload="auto"></audio>
+
+  <main class="page">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <p class="eyebrow reveal">Приглашение на свадьбу</p>
+      <div class="arch reveal">
+        <div class="arch__inner">
+          <svg class="sprig sprig--top" viewBox="0 0 120 40" aria-hidden="true"><use href="#sprig"/></svg>
+          <h1 class="names">
+            <span data-bind="groom">Имя</span>
+            <span class="amp">&amp;</span>
+            <span data-bind="bride">Имя</span>
+          </h1>
+          <p class="hero__date" id="heroDate">00 · 00 · 0000</p>
+          <p class="hero__city" data-bind="city">Город</p>
+        </div>
+      </div>
+      <a href="#invite" class="scroll-down" aria-label="Листать вниз">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- ============ АЯТ ============ -->
+    <section class="section section--tint ayah" id="ayahSection">
+      <p class="ayah__ar reveal" lang="ar" dir="rtl" data-bind="ayah.arabic"></p>
+      <p class="ayah__ru reveal" data-bind="ayah.translation"></p>
+      <p class="eyebrow ayah__src reveal" data-bind="ayah.source"></p>
+    </section>
+
+    <!-- ============ ТЕКСТ ПРИГЛАШЕНИЯ ============ -->
+    <section class="section" id="invite">
+      <h2 class="script title reveal" data-bind="greeting">Дорогие гости!</h2>
+      <p class="lead reveal" data-bind="invitationText"></p>
+      <svg class="divider reveal" viewBox="0 0 220 24" aria-hidden="true"><use href="#divider"/></svg>
+    </section>
+
+    <!-- ============ КАЛЕНДАРЬ ============ -->
+    <section class="section">
+      <h2 class="script title reveal">Сохраните дату</h2>
+      <p class="title-serif reveal" id="calTitle">Месяц</p>
+      <div class="calendar reveal" id="calendar" aria-label="Календарь"></div>
+      <p class="time-note reveal"><span data-bind="timeNote"></span><strong id="timeRange">00:00</strong></p>
+    </section>
+
+    <!-- ============ ОБРАТНЫЙ ОТСЧЁТ ============ -->
+    <section class="section section--tint">
+      <p class="eyebrow reveal">До свадьбы осталось</p>
+      <div class="countdown reveal" id="countdown">
+        <div><span id="cdDays">0</span><small>дней</small></div>
+        <div><span id="cdHours">0</span><small>часов</small></div>
+        <div><span id="cdMins">0</span><small>минут</small></div>
+        <div><span id="cdSecs">0</span><small>секунд</small></div>
+      </div>
+    </section>
+
+    <!-- ============ МЕСТО ============ -->
+    <section class="section">
+      <h2 class="script title reveal">Место проведения</h2>
+      <h3 class="venue__name reveal" data-bind="venue.name">Название места</h3>
+      <p class="venue__address reveal" data-bind="venue.address">Адрес</p>
+      <div class="map reveal" id="mapWrap" hidden></div>
+      <a class="btn reveal" id="mapLink" href="#" target="_blank" rel="noopener">Построить маршрут</a>
+    </section>
+
+    <!-- ============ ПОЖЕЛАНИЯ ============ -->
+    <section class="section section--tint" id="wishesSection">
+      <h2 class="script title reveal">Пожелания</h2>
+      <ul class="wishes" id="wishes"></ul>
+    </section>
+
+    <!-- ============ АНКЕТА ============ -->
+    <section class="section" id="rsvp">
+      <h2 class="script title reveal">Анкета гостя</h2>
+      <p class="lead reveal" id="rsvpLead">Пожалуйста, подтвердите своё присутствие</p>
+
+      <form class="form reveal" id="rsvpForm" novalidate>
+        <label class="field">
+          <span>Ваше имя и фамилия</span>
+          <input type="text" name="name" required autocomplete="name" placeholder="Например, Анна Иванова">
+        </label>
+
+        <fieldset class="field">
+          <legend>Сможете ли вы прийти?</legend>
+          <label class="choice"><input type="radio" name="attend" value="Приду" required><span>Да, с удовольствием приду</span></label>
+          <label class="choice"><input type="radio" name="attend" value="Приду с парой"><span>Приду с парой</span></label>
+          <label class="choice"><input type="radio" name="attend" value="Не смогу"><span>К сожалению, не смогу</span></label>
+        </fieldset>
+
+        <label class="field">
+          <span>Комментарий или пожелание</span>
+          <textarea name="comment" rows="3" placeholder="Необязательно"></textarea>
+        </label>
+
+        <p class="form__error" id="formError" role="alert" hidden>Пожалуйста, укажите имя и выберите вариант ответа</p>
+        <div class="form__actions">
+          <button class="btn btn--solid" type="submit" data-via="whatsapp">Отправить в WhatsApp</button>
+          <button class="btn" type="submit" data-via="telegram">Отправить в Telegram</button>
+        </div>
+      </form>
+
+      <div class="thanks" id="thanks" hidden>
+        <p class="script">Спасибо!</p>
+        <p>Будем ждать вас!</p>
+        <p class="thanks__note" id="thanksNote"></p>
+      </div>
+    </section>
+
+    <!-- ============ КОНТАКТЫ ============ -->
+    <section class="section section--tint" id="contactsSection">
+      <h2 class="script title reveal">Контакты</h2>
+      <p class="lead reveal">По всем вопросам о празднике</p>
+      <div class="contacts reveal" id="contacts"></div>
+    </section>
+
+    <!-- ============ ФИНАЛ ============ -->
+    <footer class="footer">
+      <svg class="sprig" viewBox="0 0 120 40" aria-hidden="true"><use href="#sprig"/></svg>
+      <p class="footer__text" data-bind="closing">С любовью,</p>
+      <p class="script footer__names"><span data-bind="groom">Имя</span> &amp; <span data-bind="bride">Имя</span></p>
+    </footer>
+  </main>
+
+  <!-- ============ SVG-ОРНАМЕНТЫ ============ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="sprig" viewBox="0 0 120 40">
+        <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+          <path d="M8 30 C 35 18, 85 18, 112 30"/>
+        </g>
+        <g fill="currentColor" opacity=".85">
+          <ellipse cx="22" cy="21" rx="6" ry="2.2" transform="rotate(-35 22 21)"/>
+          <ellipse cx="26" cy="29" rx="6" ry="2.2" transform="rotate(25 26 29)"/>
+          <ellipse cx="40" cy="15" rx="6" ry="2.2" transform="rotate(-45 40 15)"/>
+          <ellipse cx="44" cy="26" rx="6" ry="2.2" transform="rotate(20 44 26)"/>
+          <ellipse cx="98" cy="21" rx="6" ry="2.2" transform="rotate(35 98 21)"/>
+          <ellipse cx="94" cy="29" rx="6" ry="2.2" transform="rotate(-25 94 29)"/>
+          <ellipse cx="80" cy="15" rx="6" ry="2.2" transform="rotate(45 80 15)"/>
+          <ellipse cx="76" cy="26" rx="6" ry="2.2" transform="rotate(-20 76 26)"/>
+          <circle cx="60" cy="20" r="2.4"/>
+        </g>
+      </symbol>
+      <symbol id="divider" viewBox="0 0 220 24">
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M6 12 H92"/><path d="M128 12 H214"/>
+          <path d="M110 3 L118 12 L110 21 L102 12 Z"/>
+        </g>
+        <g fill="currentColor">
+          <circle cx="110" cy="12" r="2"/>
+          <ellipse cx="80" cy="8" rx="5" ry="1.8" transform="rotate(-25 80 8)"/>
+          <ellipse cx="140" cy="8" rx="5" ry="1.8" transform="rotate(25 140 8)"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <script src="script.js"></script>
+</body>
+</html>
