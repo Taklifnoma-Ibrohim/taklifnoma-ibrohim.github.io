@@ -6,12 +6,25 @@ const CONFIG = {
   endTime: "15:00",             // время окончания (можно оставить пустым)
   timezone: "+03:00",           // часовой пояс места (Стамбул) — для точного отсчёта у гостей из других стран
 
-  venue: {
-    name: "OZKAD",
-    address: "Kayabaşı, Kayaşehir Blv Seyran Şehir Cadde Dükkanları D:2 Blok No:29, 34494 Başakşehir/İstanbul",
-    mapLink: "https://www.google.com/maps/search/?api=1&query=Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul",
-    mapEmbed: "https://maps.google.com/maps?q=Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul&z=16&output=embed",
-  },
+  // Места проведения: для мужчин и отдельно для женщин
+  venues: [
+    {
+      who: "men",
+      name: "OZKAD",
+      address: "Kayabaşı, Kayaşehir Blv Seyran Şehir Cadde Dükkanları D:2 Blok No:29, 34494 Başakşehir/İstanbul",
+      time: "12:00 — 15:00",
+      mapLink: "https://www.google.com/maps/search/?api=1&query=Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul",
+      mapEmbed: "https://maps.google.com/maps?q=Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul&z=16&output=embed",
+    },
+    {
+      who: "women",
+      name: "GÜVERCİNTEPE SULTAN BEYAZIT CAMİİ",
+      address: "Güvercintepe, Yaman Sk. No:15, 34494 Başakşehir/İstanbul",
+      time: "15:30",
+      mapLink: "https://www.google.com/maps/search/?api=1&query=G%C3%9CVERC%C4%B0NTEPE%20SULTAN%20BEYAZIT%20CAM%C4%B0%C4%B0%2C%20G%C3%BCvercintepe%2C%20Yaman%20Sk.%20No%3A15%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul",
+      mapEmbed: "https://maps.google.com/maps?q=G%C3%9CVERC%C4%B0NTEPE%20SULTAN%20BEYAZIT%20CAM%C4%B0%C4%B0%2C%20G%C3%BCvercintepe%2C%20Yaman%20Sk.%20No%3A15%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul&z=16&output=embed",
+    },
+  ],
 
   rsvp: {
     whatsapp: "905054951211",   // номер только цифрами, без «+»
@@ -50,6 +63,7 @@ const TEXT = {
     countdownTitle: "To‘ygacha qoldi",
     days: "kun", hours: "soat", mins: "daqiqa", secs: "soniya",
     venueTitle: "To‘y manzili",
+    men: "Erkaklar uchun", women: "Ayollar uchun", timeLabel: "Vaqti",
     route: "Yo‘nalishni ko‘rish",
     map: "Xarita",
     wishesTitle: "Iltimoslarimiz",
@@ -103,6 +117,7 @@ const TEXT = {
     countdownTitle: "الوقت المتبقي على الزفاف",
     days: "يوم", hours: "ساعة", mins: "دقيقة", secs: "ثانية",
     venueTitle: "مكان الحفل",
+    men: "للرجال", women: "للنساء", timeLabel: "الوقت",
     route: "الاتجاهات على الخريطة",
     map: "الخريطة",
     wishesTitle: "ملاحظات",
@@ -157,14 +172,16 @@ let T = TEXT[CONFIG.defaultLang];
 /* ---------- Неизменные данные ---------- */
 $("#heroDate").textContent = `${pad(wedding.getDate())} · ${pad(wedding.getMonth() + 1)} · ${wedding.getFullYear()}`;
 $("#ayahArabic").textContent = CONFIG.ayahArabic;
-$("#venueName").textContent = CONFIG.venue.name;
-$("#venueAddress").textContent = CONFIG.venue.address;
-$("#mapLink").href = CONFIG.venue.mapLink || "#";
-if (CONFIG.venue.mapEmbed) {
-  const wrap = $("#mapWrap");
-  wrap.hidden = false;
-  wrap.innerHTML = `<iframe src="${CONFIG.venue.mapEmbed}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
-}
+/* ---------- Места проведения (мужчины / женщины) ---------- */
+$("#venues").innerHTML = CONFIG.venues.map((v) => `
+  <article class="venue">
+    <p class="venue__who" data-t="${v.who}"></p>
+    <h3 class="venue__name" dir="ltr">${v.name}</h3>
+    <p class="venue__time"><span data-t="timeLabel"></span> <bdi dir="ltr">${v.time}</bdi></p>
+    <p class="venue__address" dir="ltr">${v.address}</p>
+    ${v.mapEmbed ? `<div class="map"><iframe src="${v.mapEmbed}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>` : ""}
+    <a class="btn" href="${v.mapLink || "#"}" target="_blank" rel="noopener" data-t="route"></a>
+  </article>`).join("");
 if (!CONFIG.rsvp.whatsapp) document.querySelector('[data-via="whatsapp"]').remove();
 if (!CONFIG.rsvp.telegram) document.querySelector('[data-via="telegram"]').remove();
 
@@ -187,8 +204,7 @@ function setLang(lang) {
   document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === lang));
 
   document.title = `${T.groom} ${T.amp} ${T.bride} — ${T.docTitle}`;
-  $("#timeRange").textContent = CONFIG.endTime ? `${startTime} — ${CONFIG.endTime}` : `${T.startsAt} ${startTime}`;
-  $("#mapWrap iframe")?.setAttribute("title", T.map);
+  document.querySelectorAll("#venues iframe").forEach((f) => f.setAttribute("title", T.map));
 
   [renderWishes, renderContacts, renderCalendar].forEach((fn) => {
     try { fn(); } catch (err) { console.error(err); }

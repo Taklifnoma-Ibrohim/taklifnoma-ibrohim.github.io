@@ -106,7 +106,10 @@
       <h2 class="script title reveal" data-t="saveDate">Сохраните дату</h2>
       <p class="title-serif reveal" id="calTitle">Месяц</p>
       <div class="calendar reveal" id="calendar"></div>
-      <p class="time-note reveal"><span data-t="timeNote"></span><strong id="timeRange" dir="ltr">00:00</strong></p>
+      <div class="time-note reveal">
+        <p><span data-t="men"></span> · <span data-t="timeNote"></span><strong dir="ltr">12:00 — 15:00</strong></p>
+        <p><span data-t="women"></span><strong dir="ltr">15:30</strong></p>
+      </div>
     </section>
 
     <!-- ============ ОБРАТНЫЙ ОТСЧЁТ ============ -->
@@ -123,10 +126,7 @@
     <!-- ============ МЕСТО ============ -->
     <section class="section">
       <h2 class="script title reveal" data-t="venueTitle">Место проведения</h2>
-      <h3 class="venue__name reveal" id="venueName" dir="ltr">OZKAD</h3>
-      <p class="venue__address reveal" id="venueAddress" dir="ltr"></p>
-      <div class="map reveal" id="mapWrap" hidden></div>
-      <a class="btn reveal" id="mapLink" href="#" target="_blank" rel="noopener" data-t="route">Построить маршрут</a>
+      <div class="venues reveal" id="venues"></div>
     </section>
 
     <!-- ============ ПОЖЕЛАНИЯ ============ -->
