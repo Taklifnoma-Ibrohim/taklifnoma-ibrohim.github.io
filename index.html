@@ -4,33 +4,40 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Приглашение на свадьбу</title>
-  <meta name="description" content="Приглашаем вас разделить с нами день нашей свадьбы">
+  <meta name="description" content="Ибрахим & Рукайя — приглашение на свадьбу · Ibrohim & Ruqayya — to‘yga taklifnoma · إبراهيم و رقيّة — دعوة زفاف">
   <meta name="theme-color" content="#f6f1e8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Marck+Script&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Marck+Script&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="locked">
 
+  <!-- ============ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА ============ -->
+  <nav class="lang" aria-label="Язык / Til / اللغة">
+    <button type="button" data-lang="ru" lang="ru">Рус</button>
+    <button type="button" data-lang="uz" lang="uz">O‘zb</button>
+    <button type="button" data-lang="ar" lang="ar">عربي</button>
+  </nav>
+
   <!-- ============ КОНВЕРТ (заставка) ============ -->
-  <div class="intro" id="intro" role="dialog" aria-label="Открыть приглашение">
+  <div class="intro" id="intro">
     <div class="envelope" id="envelope">
       <div class="envelope__back"></div>
       <div class="envelope__letter">
-        <span class="script">Вы приглашены</span>
+        <span class="script" data-t="invited">Вы приглашены</span>
       </div>
       <div class="envelope__front"></div>
       <div class="envelope__flap"></div>
-      <button class="seal" id="openBtn" aria-label="Открыть приглашение">
-        <span id="sealInitials">И&amp;И</span>
+      <button class="seal" id="openBtn" data-t-aria="open">
+        <span id="sealInitials">И&amp;Р</span>
       </button>
     </div>
-    <p class="intro__hint">Нажмите на печать, чтобы открыть</p>
+    <p class="intro__hint" data-t="hint">Нажмите на печать, чтобы открыть</p>
   </div>
 
   <!-- ============ МУЗЫКА ============ -->
-  <button class="music" id="musicBtn" aria-label="Музыка" hidden>
+  <button class="music" id="musicBtn" aria-label="Music" hidden>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
   </button>
   <audio id="audio" preload="auto"></audio>
@@ -39,121 +46,121 @@
 
     <!-- ============ HERO ============ -->
     <section class="hero">
-      <p class="eyebrow reveal">Приглашение на свадьбу</p>
+      <p class="eyebrow reveal" data-t="heroEyebrow">Приглашение на свадьбу</p>
       <div class="arch reveal">
         <div class="arch__inner">
           <svg class="sprig sprig--top" viewBox="0 0 120 40" aria-hidden="true"><use href="#sprig"/></svg>
           <h1 class="names">
-            <span data-bind="groom">Имя</span>
-            <span class="amp">&amp;</span>
-            <span data-bind="bride">Имя</span>
+            <span data-t="groom">Ибрахим</span>
+            <span class="amp" data-t="amp">&amp;</span>
+            <span data-t="bride">Рукайя</span>
           </h1>
-          <p class="hero__date" id="heroDate">00 · 00 · 0000</p>
-          <p class="hero__city" data-bind="city">Город</p>
+          <p class="hero__date" id="heroDate" dir="ltr">00 · 00 · 0000</p>
+          <p class="hero__city" data-t="city">Стамбул</p>
         </div>
       </div>
-      <a href="#invite" class="scroll-down" aria-label="Листать вниз">
+      <a href="#ayahSection" class="scroll-down" data-t-aria="scroll">
         <span></span>
       </a>
     </section>
 
     <!-- ============ АЯТ ============ -->
     <section class="section section--tint ayah" id="ayahSection">
-      <p class="ayah__ar reveal" lang="ar" dir="rtl" data-bind="ayah.arabic"></p>
-      <p class="ayah__ru reveal" data-bind="ayah.translation"></p>
-      <p class="eyebrow ayah__src reveal" data-bind="ayah.source"></p>
+      <p class="ayah__ar reveal" lang="ar" dir="rtl" id="ayahArabic"></p>
+      <p class="ayah__ru reveal" data-t="ayahTranslation"></p>
+      <p class="eyebrow ayah__src reveal" data-t="ayahSource"></p>
     </section>
 
     <!-- ============ ТЕКСТ ПРИГЛАШЕНИЯ ============ -->
     <section class="section" id="invite">
-      <h2 class="script title reveal" data-bind="greeting">Дорогие гости!</h2>
-      <p class="lead reveal" data-bind="invitationText"></p>
+      <h2 class="script title reveal" data-t="greeting">Дорогие гости!</h2>
+      <p class="lead reveal" data-t="invitationText"></p>
       <svg class="divider reveal" viewBox="0 0 220 24" aria-hidden="true"><use href="#divider"/></svg>
     </section>
 
     <!-- ============ КАЛЕНДАРЬ ============ -->
     <section class="section">
-      <h2 class="script title reveal">Сохраните дату</h2>
+      <h2 class="script title reveal" data-t="saveDate">Сохраните дату</h2>
       <p class="title-serif reveal" id="calTitle">Месяц</p>
-      <div class="calendar reveal" id="calendar" aria-label="Календарь"></div>
-      <p class="time-note reveal"><span data-bind="timeNote"></span><strong id="timeRange">00:00</strong></p>
+      <div class="calendar reveal" id="calendar"></div>
+      <p class="time-note reveal"><span data-t="timeNote"></span><strong id="timeRange" dir="ltr">00:00</strong></p>
     </section>
 
     <!-- ============ ОБРАТНЫЙ ОТСЧЁТ ============ -->
     <section class="section section--tint">
-      <p class="eyebrow reveal">До свадьбы осталось</p>
+      <p class="eyebrow reveal" data-t="countdownTitle">До свадьбы осталось</p>
       <div class="countdown reveal" id="countdown">
-        <div><span id="cdDays">0</span><small>дней</small></div>
-        <div><span id="cdHours">0</span><small>часов</small></div>
-        <div><span id="cdMins">0</span><small>минут</small></div>
-        <div><span id="cdSecs">0</span><small>секунд</small></div>
+        <div><span id="cdDays">0</span><small data-t="days">дней</small></div>
+        <div><span id="cdHours">0</span><small data-t="hours">часов</small></div>
+        <div><span id="cdMins">0</span><small data-t="mins">минут</small></div>
+        <div><span id="cdSecs">0</span><small data-t="secs">секунд</small></div>
       </div>
     </section>
 
     <!-- ============ МЕСТО ============ -->
     <section class="section">
-      <h2 class="script title reveal">Место проведения</h2>
-      <h3 class="venue__name reveal" data-bind="venue.name">Название места</h3>
-      <p class="venue__address reveal" data-bind="venue.address">Адрес</p>
+      <h2 class="script title reveal" data-t="venueTitle">Место проведения</h2>
+      <h3 class="venue__name reveal" id="venueName" dir="ltr">OZKAD</h3>
+      <p class="venue__address reveal" id="venueAddress" dir="ltr"></p>
       <div class="map reveal" id="mapWrap" hidden></div>
-      <a class="btn reveal" id="mapLink" href="#" target="_blank" rel="noopener">Построить маршрут</a>
+      <a class="btn reveal" id="mapLink" href="#" target="_blank" rel="noopener" data-t="route">Построить маршрут</a>
     </section>
 
     <!-- ============ ПОЖЕЛАНИЯ ============ -->
     <section class="section section--tint" id="wishesSection">
-      <h2 class="script title reveal">Пожелания</h2>
+      <h2 class="script title reveal" data-t="wishesTitle">Пожелания</h2>
       <ul class="wishes" id="wishes"></ul>
     </section>
 
     <!-- ============ АНКЕТА ============ -->
     <section class="section" id="rsvp">
-      <h2 class="script title reveal">Анкета гостя</h2>
-      <p class="lead reveal" id="rsvpLead">Пожалуйста, подтвердите своё присутствие</p>
+      <h2 class="script title reveal" data-t="rsvpTitle">Анкета гостя</h2>
+      <p class="lead reveal" data-t="rsvpLead">Пожалуйста, подтвердите своё присутствие</p>
 
       <form class="form reveal" id="rsvpForm" novalidate>
         <label class="field">
-          <span>Ваше имя и фамилия</span>
-          <input type="text" name="name" required autocomplete="name" placeholder="Например, Марьям Абдуллаева">
+          <span data-t="nameLabel">Ваше имя и фамилия</span>
+          <input type="text" name="name" required autocomplete="name" data-t-ph="namePh" placeholder="Например, Марьям Абдуллаева">
         </label>
 
         <fieldset class="field">
-          <legend>Сможете ли вы прийти?</legend>
-          <label class="choice"><input type="radio" name="attend" value="Приду" required><span>Да, с удовольствием приду</span></label>
-          <label class="choice"><input type="radio" name="attend" value="Приду с парой"><span>Приду с парой</span></label>
-          <label class="choice"><input type="radio" name="attend" value="Не смогу"><span>К сожалению, не смогу</span></label>
+          <legend data-t="attendQ">Сможете ли вы прийти?</legend>
+          <label class="choice"><input type="radio" name="attend" value="a1" required><span data-t="a1">Да, с удовольствием приду</span></label>
+          <label class="choice"><input type="radio" name="attend" value="a2"><span data-t="a2">Приду с парой</span></label>
+          <label class="choice"><input type="radio" name="attend" value="a3"><span data-t="a3">К сожалению, не смогу</span></label>
         </fieldset>
 
         <label class="field">
-          <span>Комментарий или пожелание</span>
-          <textarea name="comment" rows="3" placeholder="Необязательно"></textarea>
+          <span data-t="commentLabel">Комментарий или пожелание</span>
+          <textarea name="comment" rows="3" data-t-ph="commentPh" placeholder="Необязательно"></textarea>
         </label>
 
-        <p class="form__error" id="formError" role="alert" hidden>Пожалуйста, укажите имя и выберите вариант ответа</p>
+        <p class="form__error" id="formError" role="alert" hidden data-t="formError">Пожалуйста, укажите имя и выберите вариант ответа</p>
         <div class="form__actions">
-          <button class="btn btn--solid" type="submit" data-via="whatsapp">Отправить в WhatsApp</button>
-          <button class="btn" type="submit" data-via="telegram">Отправить в Telegram</button>
+          <button class="btn btn--solid" type="submit" data-via="whatsapp" data-t="sendWa">Отправить в WhatsApp</button>
+          <button class="btn" type="submit" data-via="telegram" data-t="sendTg">Отправить в Telegram</button>
         </div>
       </form>
 
       <div class="thanks" id="thanks" hidden>
-        <p class="script">Спасибо!</p>
-        <p>Будем ждать вас!</p>
+        <p class="script" data-t="thanks">Спасибо!</p>
+        <p data-t="thanksText">Будем ждать вас!</p>
         <p class="thanks__note" id="thanksNote"></p>
       </div>
     </section>
 
     <!-- ============ КОНТАКТЫ ============ -->
     <section class="section section--tint" id="contactsSection">
-      <h2 class="script title reveal">Контакты</h2>
-      <p class="lead reveal">По всем вопросам о празднике</p>
+      <h2 class="script title reveal" data-t="contactsTitle">Контакты</h2>
+      <p class="lead reveal" data-t="contactsLead">По всем вопросам о празднике</p>
       <div class="contacts reveal" id="contacts"></div>
     </section>
 
     <!-- ============ ФИНАЛ ============ -->
     <footer class="footer">
       <svg class="sprig" viewBox="0 0 120 40" aria-hidden="true"><use href="#sprig"/></svg>
-      <p class="footer__text" data-bind="closing">С любовью,</p>
-      <p class="script footer__names"><span data-bind="groom">Имя</span> &amp; <span data-bind="bride">Имя</span></p>
+      <p class="footer__text" data-t="closing">С любовью,</p>
+      <p class="script footer__names"><span data-t="groom">Ибрахим</span> <span data-t="amp">&amp;</span> <span data-t="bride">Рукайя</span></p>
     </footer>
   </main>
 
