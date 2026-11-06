@@ -1,2 +1,4 @@
 .impeccable
 .gitignore
+.env*
+.vercel
