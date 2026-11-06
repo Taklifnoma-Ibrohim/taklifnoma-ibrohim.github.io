@@ -35,6 +35,42 @@
         "value": "montserrat",
         "createdAt": "2026-11-06T12:18:08.646Z",
         "reason": "Claude: used only for tiny tracked labels beside Cormorant/Marck Script display faces"
+      },
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "style.css"
+        ],
+        "createdAt": "2026-11-06T13:25:59.662Z",
+        "reason": "user requested: names should be distinctive and glowing (shimmering gold names)"
+      },
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-06T13:25:59.956Z",
+        "reason": "user requested: names should be distinctive and glowing (shimmering gold names)"
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-06T13:26:00.242Z",
+        "reason": "user requested: glowing names over the window view"
+      },
+      {
+        "rule": "nested-cards",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-06T13:26:00.453Z",
+        "reason": "user requested: arch is a framed window with a mosque view (frame + pane is the window, not card nesting)"
       }
     ]
   }
