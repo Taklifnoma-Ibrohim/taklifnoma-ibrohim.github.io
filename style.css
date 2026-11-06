@@ -1002,3 +1002,5 @@ html[lang="ar"] .win .names { font-size: clamp(42px, 12vw, 56px); line-height: 1
 .win .arch__flowers { width: 132px; z-index: 5; }
 .win .arch__flowers--tl { top: 21%; left: -10px; }
 .win .arch__flowers--br { bottom: 1%; right: -10px; top: auto; }
+
+.intro { cursor: pointer; -webkit-tap-highlight-color: transparent; }

@@ -302,9 +302,11 @@ if (CONFIG.music) {
 }
 
 /* ---------- Открытие конверта ---------- */
-$("#openBtn").addEventListener("click", () => {
+// Открывается нажатием в любом месте заставки (не только точно по печати):
+// некоторые мобильные браузеры при 3D-наклоне отдают нажатие клапану, а не печати.
+function openInvite() {
   const intro = $("#intro");
-  if (intro.classList.contains("is-open")) return;
+  if (!intro || intro.classList.contains("is-open")) return;
   intro.classList.add("is-open");
   if (CONFIG.music) audio.play().catch(() => {});
   if (!reduceMotion) setTimeout(() => burstPetals(40), 850);
@@ -313,6 +315,10 @@ $("#openBtn").addEventListener("click", () => {
     document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("in"));
   }, reduceMotion ? 0 : 4200);
   setTimeout(() => intro.remove(), reduceMotion ? 500 : 5400);
+}
+$("#intro").addEventListener("click", openInvite);
+$("#openBtn").addEventListener("keydown", (e) => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openInvite(); }
 });
 
 /* ---------- 3D-наклон конверта за курсором ---------- */
