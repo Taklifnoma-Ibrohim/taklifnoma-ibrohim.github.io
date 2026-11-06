@@ -48,6 +48,7 @@ const TEXT = {
     docTitle: "to‘yga taklifnoma",
     invited: "Siz taklif etilgansiz",
     hint: "Ochish uchun muhrni bosing",
+    choose: "Taklifnomani tanlang:",
     open: "Taklifnomani ochish", scroll: "Pastga",
     heroEyebrow: "To‘yga taklifnoma",
     ayahTranslation: "Uning oyat-alomatlaridan biri — sizlar uchun o‘zlaringizdan juftlar yaratib qo‘ygani, toki ular bilan taskin topgaysizlar. Va o‘rtalaringizda muhabbat va mehribonlik paydo qildi. Albatta, bunda tafakkur qiladigan qavm uchun oyat-alomatlar bordir.",
@@ -102,6 +103,7 @@ const TEXT = {
     docTitle: "دعوة زفاف",
     invited: "أنتم مدعوون",
     hint: "اضغط على الختم لفتح الدعوة",
+    choose: "اختاروا الدعوة:",
     open: "فتح الدعوة", scroll: "إلى الأسفل",
     heroEyebrow: "دعوة زفاف",
     ayahTranslation: "",
@@ -165,7 +167,20 @@ const store = {
 };
 
 const wedding = new Date(CONFIG.date);
-const weddingAbs = new Date(`${CONFIG.date}:00${CONFIG.timezone || ""}`);
+let weddingAbs = new Date(`${CONFIG.date}:00${CONFIG.timezone || ""}`);
+
+/* ---------- Для кого приглашение: мужчины / женщины (?for=men | ?for=women) ---------- */
+let audience = ["men", "women"].includes(new URLSearchParams(location.search).get("for"))
+  ? new URLSearchParams(location.search).get("for") : "";
+function setAudience(who) {
+  audience = who || "";
+  document.documentElement.dataset.for = audience;
+  const v = CONFIG.venues.find((x) => x.who === audience);
+  const start = v ? v.time.slice(0, 5) : CONFIG.date.slice(11, 16);
+  weddingAbs = new Date(`${CONFIG.date.slice(0, 10)}T${start}:00${CONFIG.timezone || ""}`);
+  const lf = $("#letterFor");
+  if (lf) { lf.dataset.t = audience; lf.textContent = audience ? T[audience] : ""; }
+}
 const startTime = `${pad(wedding.getHours())}:${pad(wedding.getMinutes())}`;
 let T = TEXT[CONFIG.defaultLang];
 
@@ -174,7 +189,7 @@ $("#heroDate").textContent = `${pad(wedding.getDate())} · ${pad(wedding.getMont
 $("#ayahArabic").textContent = CONFIG.ayahArabic;
 /* ---------- Места проведения (мужчины / женщины) ---------- */
 $("#venues").innerHTML = CONFIG.venues.map((v) => `
-  <article class="venue">
+  <article class="venue" data-who="${v.who}">
     <p class="venue__who" data-t="${v.who}"></p>
     <h3 class="venue__name" dir="ltr">${v.name}</h3>
     <p class="venue__time"><span data-t="timeLabel"></span> <bdi dir="ltr">${v.time}</bdi></p>
@@ -286,6 +301,7 @@ $("#rsvpForm").addEventListener("submit", (e) => {
     T.salam,
     "",
     title,
+    audience ? `(${T[audience]})` : null,
     `${T.msgName}: ${name}`,
     `${T.msgAnswer}: ${T[attend]}`,
     comment ? `${T.msgComment}: ${comment}` : null,
@@ -332,6 +348,9 @@ function openInvite() {
   }, reduceMotion ? 0 : 4200);
   setTimeout(() => intro.remove(), reduceMotion ? 500 : 5400);
 }
+document.querySelectorAll(".intro__choice button").forEach((b) =>
+  b.addEventListener("click", () => setAudience(b.dataset.for))
+);
 $("#intro").addEventListener("click", openInvite);
 $("#openBtn").addEventListener("keydown", (e) => {
   if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openInvite(); }
@@ -399,3 +418,4 @@ document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
 /* ---------- Старт: язык из ссылки (?lang=uz), затем сохранённый, затем по умолчанию ---------- */
 setLang(new URLSearchParams(location.search).get("lang") || store.get("lang") || CONFIG.defaultLang);
+setAudience(audience);

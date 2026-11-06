@@ -24,7 +24,7 @@
   <link rel="preload" as="image" href="img/paper.webp" type="image/webp">
   <link rel="preload" as="image" href="img/window-frame.webp" type="image/webp">
   <link rel="preload" as="image" href="img/seal.webp" type="image/webp">
-  <link rel="stylesheet" href="style.css?v=202611061922">
+  <link rel="stylesheet" href="style.css?v=202611062229">
 </head>
 <body class="locked">
 
@@ -47,6 +47,7 @@
       <div class="envelope__letter">
         <img class="letter__garland" src="img/garland.webp" alt="" aria-hidden="true" decoding="async">
         <span class="script" data-t="invited">Siz taklif etilgansiz</span>
+        <span class="letter__for" id="letterFor"></span>
         <span class="letter__names"><span data-t="groom">Ibrohim</span> <span data-t="amp">&amp;</span> <span data-t="bride">Ruqayya</span></span>
       </div>
       <div class="envelope__front"><i class="fold fold--l"></i><i class="fold fold--r"></i><i class="fold fold--b"></i></div>
@@ -60,7 +61,14 @@
     </div>
     <div class="env-shadow" aria-hidden="true"></div>
     </div>
-    <p class="intro__hint" data-t="hint">Нажмите на печать, чтобы открыть</p>
+    <p class="intro__hint intro__hint--seal" data-t="hint">Ochish uchun muhrni bosing</p>
+    <div class="intro__pick">
+      <p class="intro__hint" data-t="choose">Taklifnomani tanlang:</p>
+      <div class="intro__choice">
+        <button type="button" data-for="men" data-t="men">Erkaklar uchun</button>
+        <button type="button" data-for="women" data-t="women">Ayollar uchun</button>
+      </div>
+    </div>
   </div>
 
   <!-- ============ МУЗЫКА ============ -->
@@ -117,8 +125,8 @@
       <p class="title-serif reveal" id="calTitle">Месяц</p>
       <div class="calendar reveal" id="calendar"></div>
       <div class="time-note reveal">
-        <p><span data-t="men"></span> · <span data-t="timeNote"></span><strong dir="ltr">12:00 — 15:00</strong></p>
-        <p><span data-t="women"></span><strong dir="ltr">15:30</strong></p>
+        <p data-who="men"><span data-t="men"></span> · <span data-t="timeNote"></span><strong dir="ltr">12:00 — 15:00</strong></p>
+        <p data-who="women"><span data-t="women"></span><strong dir="ltr">15:30</strong></p>
       </div>
     </section>
 
@@ -232,6 +240,6 @@
     </defs>
   </svg>
 
-  <script src="script.js?v=202611061922"></script>
+  <script src="script.js?v=202611062229"></script>
 </body>
 </html>

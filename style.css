@@ -1058,3 +1058,51 @@ html[lang="ar"] .venue__who { font-size: 18px; }
 /* Тень-виньетка конверта — под письмом, чтобы не было линии поперёк письма */
 .envelope::after { z-index: 0; }
 .envelope__letter { z-index: 1; }
+
+
+/* =========================================================
+   v6 — выбор «для мужчин / для женщин»
+   ========================================================= */
+/* по ссылке ?for=... кнопки выбора не нужны */
+html[data-for="men"] .intro__pick,
+html[data-for="women"] .intro__pick { display: none; }
+html:not([data-for="men"]):not([data-for="women"]) .intro__hint--seal { display: none; }
+
+.intro__pick { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.intro__choice { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.intro__choice button {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  padding: 14px 22px;
+  cursor: pointer;
+  transition: background .25s, transform .2s;
+}
+.intro__choice button + button { background: transparent; color: var(--ink); }
+.intro__choice button:hover { transform: translateY(-2px); }
+.intro__choice button:focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
+html[lang="ar"] .intro__choice button { font-size: 17px; padding-block: 10px; }
+.intro.is-open .intro__pick { opacity: 0; transition: opacity .3s; pointer-events: none; }
+
+.letter__for {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin: 2px 0 0;
+}
+.letter__for:empty { display: none; }
+html[lang="ar"] .letter__for { font-size: 14px; }
+
+/* показываем только своё место и время */
+html[data-for="men"] [data-who="women"],
+html[data-for="women"] [data-who="men"] { display: none !important; }
+html[data-for="men"] .time-note p + p,
+html[data-for="women"] .time-note p + p { border-top: 0; margin-top: 0; padding-top: 0; }
