@@ -13,6 +13,8 @@
 </head>
 <body class="locked">
 
+  <div class="petals" id="petals" aria-hidden="true"></div>
+
   <!-- ============ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА ============ -->
   <nav class="lang" aria-label="Til / اللغة">
     <button type="button" data-lang="uz" lang="uz">O‘zb</button>
@@ -21,16 +23,24 @@
 
   <!-- ============ КОНВЕРТ (заставка) ============ -->
   <div class="intro" id="intro">
+    <svg class="intro__corner intro__corner--tl" viewBox="0 0 220 160" aria-hidden="true"><use href="#bouquet"/></svg>
+    <svg class="intro__corner intro__corner--br" viewBox="0 0 220 160" aria-hidden="true"><use href="#bouquet"/></svg>
+    <div class="env-float">
     <div class="envelope" id="envelope">
       <div class="envelope__back"></div>
       <div class="envelope__letter">
-        <span class="script" data-t="invited">Вы приглашены</span>
+        <svg class="letter__garland" viewBox="0 0 240 80" aria-hidden="true"><use href="#garland"/></svg>
+        <span class="script" data-t="invited">Siz taklif etilgansiz</span>
+        <span class="letter__names"><span data-t="groom">Ibrohim</span> <span data-t="amp">&amp;</span> <span data-t="bride">Ruqayya</span></span>
       </div>
       <div class="envelope__front"></div>
       <div class="envelope__flap"></div>
       <button class="seal" id="openBtn" data-t-aria="open">
         <span id="sealInitials">I&amp;R</span>
       </button>
+      <svg class="env-flowers env-flowers--l" viewBox="0 0 220 160" aria-hidden="true"><use href="#bouquet"/></svg>
+      <svg class="env-flowers env-flowers--r" viewBox="0 0 220 160" aria-hidden="true"><use href="#bouquet"/></svg>
+    </div>
     </div>
     <p class="intro__hint" data-t="hint">Нажмите на печать, чтобы открыть</p>
   </div>
@@ -45,17 +55,20 @@
 
     <!-- ============ HERO ============ -->
     <section class="hero">
-      <p class="eyebrow reveal" data-t="heroEyebrow">Приглашение на свадьбу</p>
-      <div class="arch reveal">
+      <p class="bismillah reveal" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      <p class="eyebrow reveal" style="--d:.2s" data-t="heroEyebrow">To‘yga taklifnoma</p>
+      <div class="arch reveal" style="--d:.35s">
+        <svg class="arch__flowers arch__flowers--tl" viewBox="0 0 220 160" aria-hidden="true"><use href="#bouquet"/></svg>
+        <svg class="arch__flowers arch__flowers--br" viewBox="0 0 220 160" aria-hidden="true"><use href="#bouquet"/></svg>
         <div class="arch__inner">
           <svg class="sprig sprig--top" viewBox="0 0 120 40" aria-hidden="true"><use href="#sprig"/></svg>
           <h1 class="names">
-            <span data-t="groom">Ибрахим</span>
-            <span class="amp" data-t="amp">&amp;</span>
-            <span data-t="bride">Рукайя</span>
+            <span class="reveal" style="--d:.7s" data-t="groom">Ibrohim</span>
+            <span class="amp reveal" style="--d:1s" data-t="amp">&amp;</span>
+            <span class="reveal" style="--d:1.2s" data-t="bride">Ruqayya</span>
           </h1>
-          <p class="hero__date" id="heroDate" dir="ltr">00 · 00 · 0000</p>
-          <p class="hero__city" data-t="city">Стамбул</p>
+          <p class="hero__date reveal" style="--d:1.5s" id="heroDate" dir="ltr">00 · 00 · 0000</p>
+          <p class="hero__city reveal" style="--d:1.65s" data-t="city">Istanbul</p>
         </div>
       </div>
       <a href="#ayahSection" class="scroll-down" data-t-aria="scroll">
@@ -65,13 +78,15 @@
 
     <!-- ============ АЯТ ============ -->
     <section class="section section--tint ayah" id="ayahSection">
+      <svg class="garland reveal" viewBox="0 0 240 80" aria-hidden="true"><use href="#garland"/></svg>
       <p class="ayah__ar reveal" lang="ar" dir="rtl" id="ayahArabic"></p>
       <p class="ayah__ru reveal" data-t="ayahTranslation"></p>
       <p class="eyebrow ayah__src reveal" data-t="ayahSource"></p>
     </section>
 
     <!-- ============ ТЕКСТ ПРИГЛАШЕНИЯ ============ -->
-    <section class="section" id="invite">
+    <section class="section has-flowers" id="invite">
+      <svg class="corner-flowers corner-flowers--tr" viewBox="0 0 220 160" aria-hidden="true"><use href="#bouquet"/></svg>
       <h2 class="script title reveal" data-t="greeting">Дорогие гости!</h2>
       <p class="lead reveal" data-t="invitationText"></p>
       <svg class="divider reveal" viewBox="0 0 220 24" aria-hidden="true"><use href="#divider"/></svg>
@@ -149,7 +164,8 @@
     </section>
 
     <!-- ============ КОНТАКТЫ ============ -->
-    <section class="section section--tint" id="contactsSection">
+    <section class="section section--tint has-flowers" id="contactsSection">
+      <svg class="corner-flowers corner-flowers--bl" viewBox="0 0 220 160" aria-hidden="true"><use href="#bouquet"/></svg>
       <h2 class="script title reveal" data-t="contactsTitle">Контакты</h2>
       <p class="lead reveal" data-t="contactsLead">По всем вопросам о празднике</p>
       <div class="contacts reveal" id="contacts"></div>
@@ -157,7 +173,7 @@
 
     <!-- ============ ФИНАЛ ============ -->
     <footer class="footer">
-      <svg class="sprig" viewBox="0 0 120 40" aria-hidden="true"><use href="#sprig"/></svg>
+      <svg class="garland garland--lg reveal" viewBox="0 0 240 80" aria-hidden="true"><use href="#garland"/></svg>
       <p class="footer__text" data-t="closing">С любовью,</p>
       <p class="script footer__names"><span data-t="groom">Ибрахим</span> <span data-t="amp">&amp;</span> <span data-t="bride">Рукайя</span></p>
     </footer>
@@ -192,6 +208,72 @@
           <ellipse cx="80" cy="8" rx="5" ry="1.8" transform="rotate(-25 80 8)"/>
           <ellipse cx="140" cy="8" rx="5" ry="1.8" transform="rotate(25 140 8)"/>
         </g>
+      </symbol>
+
+      <!-- ===== Цветы ===== -->
+      <g id="roseG">
+        <circle r="27" style="fill:var(--r1,#f2dbd3)"/>
+        <path d="M-25 6Q-27-16-6-24Q12-28 24-12Q30 4 20 16Q4 4-25 6Z" style="fill:var(--r2,#ebc9bf)"/>
+        <path d="M-18 2Q-18-16 0-18Q18-16 18 2Q9-7 0-7Q-9-7-18 2Z" style="fill:var(--r3,#e1b2a6)"/>
+        <path d="M-11 0Q-11-11 0-12Q11-11 11 0Q5-5 0-5Q-5-5-11 0Z" style="fill:var(--r4,#d39a8e)"/>
+        <path d="M-4-3Q-1-9 5-6Q8-1 2 2Q-3 2-3-2" fill="none" style="stroke:var(--r5,#b5766b)" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M-26 8Q0 34 26 8Q14 20 0 20Q-14 20-26 8Z" style="fill:var(--r6,#e5bdb2)"/>
+        <path d="M-19 11Q0 25 19 11" fill="none" style="stroke:var(--r5,#b5766b)" stroke-width=".6" opacity=".5"/>
+      </g>
+      <g id="leafG">
+        <path d="M0 0C10-10 28-10 42 0C28 10 10 10 0 0Z" style="fill:var(--lf,#8e9b79)"/>
+        <path d="M2 0H38" stroke="#fff" stroke-opacity=".35" stroke-width=".8"/>
+      </g>
+      <g id="eucaG">
+        <path d="M0 0C6-16 16-34 28-50" fill="none" stroke="#8e9b79" stroke-width="1.1"/>
+        <g style="fill:var(--eu,#b3bea2)">
+          <circle cx="-2" cy="-10" r="5"/><circle cx="10" cy="-14" r="4.6"/><circle cx="7" cy="-27" r="4.2"/><circle cx="19" cy="-30" r="3.8"/><circle cx="16" cy="-41" r="3.3"/><circle cx="27" cy="-44" r="2.8"/><circle cx="28" cy="-52" r="2.2"/>
+        </g>
+      </g>
+      <g id="blossomG">
+        <g fill="#fffaf3" stroke="#e4d3bd" stroke-width=".5">
+          <circle cx="0" cy="-5" r="4.3"/><circle cx="4.8" cy="-1.5" r="4.3"/><circle cx="2.9" cy="4" r="4.3"/><circle cx="-2.9" cy="4" r="4.3"/><circle cx="-4.8" cy="-1.5" r="4.3"/>
+        </g>
+        <circle r="2.1" fill="#c9a66b"/>
+      </g>
+      <g id="budG">
+        <path d="M0 0C-1-6 0-10 0-14" stroke="#8e9b79" stroke-width="1" fill="none"/>
+        <path d="M0-12C-6-14-6-22 0-26C6-22 6-14 0-12Z" fill="#e1b2a6"/>
+        <path d="M-4-13C-2-11 2-11 4-13L0-9Z" fill="#8e9b79"/>
+      </g>
+      <symbol id="bouquet" viewBox="0 0 220 160" overflow="visible">
+        <use href="#eucaG" transform="translate(96 92) rotate(40) scale(1.5)"/>
+        <use href="#eucaG" transform="translate(80 96) rotate(-55) scale(1.3)"/>
+        <use href="#eucaG" transform="translate(84 104) rotate(150) scale(1.2)"/>
+        <use href="#leafG" transform="translate(100 98) rotate(-8) scale(1.7)"/>
+        <use href="#leafG" transform="translate(98 104) rotate(24) scale(1.5)" style="--lf:#a6b190"/>
+        <use href="#leafG" transform="translate(92 88) rotate(-58) scale(1.5)" style="--lf:#7b8a66"/>
+        <use href="#leafG" transform="translate(80 92) rotate(-125) scale(1.6)" style="--lf:#a6b190"/>
+        <use href="#leafG" transform="translate(78 100) rotate(175) scale(1.7)"/>
+        <use href="#leafG" transform="translate(84 108) rotate(130) scale(1.4)" style="--lf:#7b8a66"/>
+        <use href="#budG" transform="translate(150 70) rotate(50) scale(1.1)"/>
+        <use href="#budG" transform="translate(52 58) rotate(-40)"/>
+        <use href="#roseG" transform="translate(124 84) scale(.78)" style="--r1:#faf3ea;--r2:#f3e6d6;--r3:#ead6bf;--r4:#dcc2a3;--r5:#a98a63;--r6:#efe0cd"/>
+        <use href="#roseG" transform="translate(64 80) scale(.62)" style="--r1:#f7e6e0;--r2:#f0d5cc;--r3:#e8c3b8;--r4:#dcab9f"/>
+        <use href="#roseG" transform="translate(92 100) scale(1.15)"/>
+        <use href="#blossomG" transform="translate(140 110)"/>
+        <use href="#blossomG" transform="translate(56 112) scale(.85)"/>
+        <use href="#blossomG" transform="translate(108 62) scale(.9)"/>
+        <g fill="#c9a66b"><circle cx="160" cy="96" r="1.6"/><circle cx="168" cy="86" r="1.2"/><circle cx="44" cy="90" r="1.4"/><circle cx="120" cy="48" r="1.3"/><circle cx="74" cy="130" r="1.3"/></g>
+      </symbol>
+      <g id="garlandHalf">
+        <use href="#eucaG" transform="translate(134 46) rotate(68) scale(1.25)"/>
+        <use href="#leafG" transform="translate(130 42) rotate(-14) scale(1.45)"/>
+        <use href="#leafG" transform="translate(136 50) rotate(16) scale(1.25)" style="--lf:#a6b190"/>
+        <use href="#leafG" transform="translate(178 40) rotate(-22) scale(.9)" style="--lf:#7b8a66"/>
+        <use href="#roseG" transform="translate(152 50) scale(.5)" style="--r1:#faf3ea;--r2:#f3e6d6;--r3:#ead6bf;--r4:#dcc2a3;--r5:#a98a63;--r6:#efe0cd"/>
+        <use href="#blossomG" transform="translate(188 50) scale(.85)"/>
+        <circle cx="206" cy="42" r="1.4" fill="#c9a66b"/>
+      </g>
+      <symbol id="garland" viewBox="0 0 240 80" overflow="visible">
+        <use href="#garlandHalf"/>
+        <use href="#garlandHalf" transform="translate(240 0) scale(-1 1)"/>
+        <use href="#roseG" transform="translate(120 44) scale(.78)"/>
       </symbol>
     </defs>
   </svg>

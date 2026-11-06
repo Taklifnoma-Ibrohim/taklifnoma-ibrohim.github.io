@@ -2,7 +2,7 @@
    ОБЩИЕ ДАННЫЕ (одинаковые для всех языков)
    ========================================================= */
 const CONFIG = {
-  date: "2026-11-12T12:00",     // дата и время начала (ГГГГ-ММ-ДДTЧЧ:ММ)
+  date: "2026-11-14T12:00",     // дата и время начала (ГГГГ-ММ-ДДTЧЧ:ММ)
   endTime: "15:00",             // время окончания (можно оставить пустым)
   timezone: "+03:00",           // часовой пояс места (Стамбул) — для точного отсчёта у гостей из других стран
 
@@ -139,6 +139,8 @@ const TEXT = {
    Дальше — логика сайта (менять не нужно)
    ========================================================= */
 const $ = (s) => document.querySelector(s);
+const rand = (a, b) => a + Math.random() * (b - a);
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const pad = (n) => String(n).padStart(2, "0");
 const store = {
   get: (k) => { try { return localStorage.getItem(k); } catch { return null; } },
@@ -234,12 +236,18 @@ function renderContacts() {
 /* ---------- Обратный отсчёт ---------- */
 (function countdown() {
   const els = { d: $("#cdDays"), h: $("#cdHours"), m: $("#cdMins"), s: $("#cdSecs") };
+  const set = (el, v) => {
+    v = String(v);
+    if (el.textContent === v) return;
+    el.textContent = v;
+    if (!reduceMotion && el.animate) el.animate([{ opacity: 0, transform: "translateY(-8px)" }, { opacity: 1, transform: "none" }], { duration: 450, easing: "ease-out" });
+  };
   function tick() {
     const diff = Math.max(0, weddingAbs - Date.now()) / 1000;
-    els.d.textContent = Math.floor(diff / 86400);
-    els.h.textContent = pad(Math.floor((diff % 86400) / 3600));
-    els.m.textContent = pad(Math.floor((diff % 3600) / 60));
-    els.s.textContent = pad(Math.floor(diff % 60));
+    set(els.d, Math.floor(diff / 86400));
+    set(els.h, pad(Math.floor((diff % 86400) / 3600)));
+    set(els.m, pad(Math.floor((diff % 3600) / 60)));
+    set(els.s, pad(Math.floor(diff % 60)));
   }
   tick();
   setInterval(tick, 1000);
@@ -286,11 +294,54 @@ if (CONFIG.music) {
 
 /* ---------- Открытие конверта ---------- */
 $("#openBtn").addEventListener("click", () => {
-  $("#intro").classList.add("is-open");
-  document.body.classList.remove("locked");
+  const intro = $("#intro");
+  if (intro.classList.contains("is-open")) return;
+  intro.classList.add("is-open");
   if (CONFIG.music) audio.play().catch(() => {});
-  setTimeout(() => document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("in")), 1300);
+  if (!reduceMotion) setTimeout(() => burstPetals(40), 850);
+  setTimeout(() => {
+    document.body.classList.remove("locked");
+    document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("in"));
+  }, reduceMotion ? 0 : 2200);
+  setTimeout(() => intro.remove(), reduceMotion ? 500 : 3300);
 });
+
+/* ---------- Лепестки ---------- */
+function makePetal(cls, vars) {
+  const p = document.createElement("i");
+  p.className = `petal ${cls}${Math.random() < 0.35 ? " petal--ivory" : ""}`;
+  for (const k in vars) p.style.setProperty(`--${k}`, vars[k]);
+  $("#petals").appendChild(p);
+  return p;
+}
+function burstPetals(n) {
+  for (let i = 0; i < n; i++) {
+    const a = rand(-Math.PI * 0.95, -Math.PI * 0.05);
+    const dist = rand(80, Math.min(innerWidth, 700) * 0.55);
+    const p = makePetal("petal--burst", {
+      bx: `${(Math.cos(a) * dist).toFixed(0)}px`,
+      by: `${(Math.sin(a) * dist * 0.9).toFixed(0)}px`,
+      fall: `${rand(35, 70).toFixed(0)}vh`,
+      r: `${rand(-600, 600).toFixed(0)}deg`,
+      s: rand(0.7, 1.35).toFixed(2),
+      d: `${rand(2.4, 3.8).toFixed(2)}s`,
+    });
+    p.addEventListener("animationend", () => p.remove());
+  }
+}
+function startFalling(n) {
+  for (let i = 0; i < n; i++) {
+    makePetal("petal--fall", {
+      x: `${rand(0, 100).toFixed(1)}vw`,
+      drift: `${rand(-90, 90).toFixed(0)}px`,
+      r: `${rand(240, 900).toFixed(0)}deg`,
+      s: rand(0.55, 1.05).toFixed(2),
+      d: `${rand(12, 22).toFixed(1)}s`,
+      delay: `${(-rand(0, 22)).toFixed(1)}s`,
+    });
+  }
+}
+if (!reduceMotion) startFalling(innerWidth < 600 ? 9 : 14);
 
 /* ---------- Анимация появления ---------- */
 const io = new IntersectionObserver((entries) => {
