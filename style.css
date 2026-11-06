@@ -1050,3 +1050,7 @@ html[lang="ar"] .venue__who { font-size: 18px; }
   .intro.is-open .env-tilt { transform: none; }
 }
 .time-note p span { display: inline; margin: 0; }
+
+/* Переключатель языков — в правом верхнем углу */
+.lang { left: auto; right: 12px; top: 12px; translate: none; }
+.intro__corner--tl { top: 10px; }
