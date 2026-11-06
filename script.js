@@ -69,7 +69,7 @@ const TEXT = {
     wishesTitle: "Iltimoslarimiz",
     wishes: [
       "Iltimos, bizga gul sovg‘a qilmang — ularning go‘zalligidan bahramand bo‘lishga ulgurmaymiz",
-      "Biz uchun eng yaxshi sovg‘a — sizning ishtirokingiz va konvertdagi sovg‘a",
+      "Biz uchun eng qimmatli sovg‘a — sizning samimiy duolaringiz va shu kuni yonimizda bo‘lishingiz",
       "To‘y bo‘yicha savollaringizni quyidagi kontaktlar orqali berishingiz mumkin",
     ],
     rsvpTitle: "Mehmon anketasi",
@@ -123,7 +123,7 @@ const TEXT = {
     wishesTitle: "ملاحظات",
     wishes: [
       "نرجو عدم إهدائنا الزهور، فلن نتمكن من الاستمتاع بجمالها",
-      "أجمل هدية لنا هي حضوركم، والهدية في ظرف",
+      "أغلى هدية لنا دعواتكم الصادقة ومشاركتكم فرحتنا في هذا اليوم",
       "يمكنكم طرح أسئلتكم حول الحفل عبر وسائل التواصل أدناه",
     ],
     rsvpTitle: "تأكيد الحضور",
