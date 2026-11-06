@@ -13,8 +13,8 @@ const CONFIG = {
       name: "OZKAD",
       address: "Kayabaşı, Kayaşehir Blv Seyran Şehir Cadde Dükkanları D:2 Blok No:29, 34494 Başakşehir/İstanbul",
       time: "12:00 — 15:00",
-      mapLink: "https://www.google.com/maps/search/?api=1&query=Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul",
-      mapEmbed: "https://maps.google.com/maps?q=Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul&z=16&output=embed",
+      mapLink: "https://www.google.com/maps/search/?api=1&query=OZKAD%2C%20Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul",
+      mapEmbed: "https://maps.google.com/maps?q=OZKAD%2C%20Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul&z=17&output=embed",
     },
     {
       who: "women",
@@ -22,7 +22,7 @@ const CONFIG = {
       address: "Güvercintepe, Yaman Sk. No:15, 34494 Başakşehir/İstanbul",
       time: "15:30",
       mapLink: "https://www.google.com/maps/search/?api=1&query=G%C3%9CVERC%C4%B0NTEPE%20SULTAN%20BEYAZIT%20CAM%C4%B0%C4%B0%2C%20G%C3%BCvercintepe%2C%20Yaman%20Sk.%20No%3A15%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul",
-      mapEmbed: "https://maps.google.com/maps?q=G%C3%9CVERC%C4%B0NTEPE%20SULTAN%20BEYAZIT%20CAM%C4%B0%C4%B0%2C%20G%C3%BCvercintepe%2C%20Yaman%20Sk.%20No%3A15%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul&z=16&output=embed",
+      mapEmbed: "https://maps.google.com/maps?q=G%C3%9CVERC%C4%B0NTEPE%20SULTAN%20BEYAZIT%20CAM%C4%B0%C4%B0%2C%20G%C3%BCvercintepe%2C%20Yaman%20Sk.%20No%3A15%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul&z=17&output=embed",
     },
   ],
 
@@ -194,7 +194,7 @@ $("#venues").innerHTML = CONFIG.venues.map((v) => `
     <h3 class="venue__name" dir="ltr">${v.name}</h3>
     <p class="venue__time"><span data-t="timeLabel"></span> <bdi dir="ltr">${v.time}</bdi></p>
     <p class="venue__address" dir="ltr">${v.address}</p>
-    ${v.mapEmbed ? `<div class="map"><iframe src="${v.mapEmbed}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>` : ""}
+    ${v.mapEmbed ? `<div class="map"><div class="map__clip"><iframe src="${v.mapEmbed}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><img class="map__seal" src="img/seal.webp" alt="" aria-hidden="true" decoding="async"></div>` : ""}
     <a class="btn" href="${v.mapLink || "#"}" target="_blank" rel="noopener" data-t="route"></a>
   </article>`).join("");
 if (!CONFIG.rsvp.whatsapp) document.querySelector('[data-via="whatsapp"]').remove();
