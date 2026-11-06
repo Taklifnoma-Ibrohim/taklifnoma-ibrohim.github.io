@@ -75,7 +75,8 @@ const TEXT = {
     thanksText: "Sizni kutamiz!",
     noteWa: "WhatsApp’da «Yuborish» tugmasini bosing.",
     noteTg: "Javob matni nusxalandi — uni Telegram chatiga qo‘ying va yuboring.",
-    msgTitle: "Taklifnomaga javob", msgName: "Ism", msgAnswer: "Javob", msgComment: "Izoh",
+    salam: "Assalomu alaykum va rohmatullohi va barokatuh!",
+    msgTitle: "{g} va {b}ning to‘y taklifnomasiga javobim:", msgName: "Ism", msgAnswer: "Javob", msgComment: "Izoh",
     contactsTitle: "Aloqa",
     contactsLead: "To‘y bo‘yicha barcha savollar uchun",
     phone: "Telefon", write: "Yozish",
@@ -127,7 +128,8 @@ const TEXT = {
     thanksText: "بانتظاركم!",
     noteWa: "بقي أن تضغطوا «إرسال» في واتساب.",
     noteTg: "تم نسخ نص الرد — الصقوه في محادثة تيليجرام وأرسلوه.",
-    msgTitle: "رد على الدعوة", msgName: "الاسم", msgAnswer: "الرد", msgComment: "تعليق",
+    salam: "السلام عليكم ورحمة الله وبركاته",
+    msgTitle: "ردّي على دعوة زفاف {g} و{b}:", msgName: "الاسم", msgAnswer: "الرد", msgComment: "تعليق",
     contactsTitle: "للتواصل",
     contactsLead: "لأي استفسار حول الحفل",
     phone: "الهاتف", write: "مراسلة",
@@ -185,7 +187,6 @@ function setLang(lang) {
   document.querySelectorAll(".lang button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.lang === lang));
 
   document.title = `${T.groom} ${T.amp} ${T.bride} — ${T.docTitle}`;
-  $("#sealInitials").textContent = lang === "ar" ? `${T.groom[0]} و ${T.bride[0]}` : `${T.groom[0]}&${T.bride[0]}`;
   $("#timeRange").textContent = CONFIG.endTime ? `${startTime} — ${CONFIG.endTime}` : `${T.startsAt} ${startTime}`;
   $("#mapWrap iframe")?.setAttribute("title", T.map);
 
@@ -264,7 +265,15 @@ $("#rsvpForm").addEventListener("submit", (e) => {
   if (!name || !attend) { err.hidden = false; return; }
   err.hidden = true;
 
-  const text = `${T.msgTitle}\n${T.msgName}: ${name}\n${T.msgAnswer}: ${T[attend]}${comment ? `\n${T.msgComment}: ${comment}` : ""}`;
+  const title = T.msgTitle.replace("{g}", T.groom).replace("{b}", T.bride);
+  const text = [
+    T.salam,
+    "",
+    title,
+    `${T.msgName}: ${name}`,
+    `${T.msgAnswer}: ${T[attend]}`,
+    comment ? `${T.msgComment}: ${comment}` : null,
+  ].filter((l) => l !== null).join("\n");
   const via = e.submitter?.dataset.via || "whatsapp";
 
   if (via === "telegram" && CONFIG.rsvp.telegram) {
@@ -302,9 +311,21 @@ $("#openBtn").addEventListener("click", () => {
   setTimeout(() => {
     document.body.classList.remove("locked");
     document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("in"));
-  }, reduceMotion ? 0 : 2200);
-  setTimeout(() => intro.remove(), reduceMotion ? 500 : 3300);
+  }, reduceMotion ? 0 : 4200);
+  setTimeout(() => intro.remove(), reduceMotion ? 500 : 5400);
 });
+
+/* ---------- 3D-наклон конверта за курсором ---------- */
+const envTilt = $("#envTilt");
+if (envTilt && !reduceMotion && matchMedia("(hover: hover)").matches) {
+  $("#intro").addEventListener("pointermove", (e) => {
+    if ($("#intro").classList.contains("is-open")) return;
+    const x = e.clientX / innerWidth - 0.5;
+    const y = e.clientY / innerHeight - 0.5;
+    envTilt.style.setProperty("--ry", `${(x * 20).toFixed(2)}deg`);
+    envTilt.style.setProperty("--rx", `${(-y * 14).toFixed(2)}deg`);
+  });
+}
 
 /* ---------- Лепестки ---------- */
 function makePetal(cls, vars) {

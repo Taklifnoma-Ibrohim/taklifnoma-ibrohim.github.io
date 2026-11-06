@@ -136,9 +136,11 @@ img, svg { display: block; }
 }
 .arch__flowers--tl { top: 12%; left: -92px; }
 .arch__flowers--br { bottom: -44px; right: -80px; scale: -1 1; animation-delay: -3.5s; }
-.corner-flowers { width: 170px; opacity: .95; animation: sway 8s ease-in-out infinite; transform-origin: 40% 62%; }
-.corner-flowers--tr { top: -34px; right: -64px; scale: -1 1; }
-.corner-flowers--bl { bottom: -50px; left: -60px; }
+.corner-flowers { width: 150px; height: auto; animation: sway 8s ease-in-out infinite; transform-origin: 30% 60%; }
+.corner-flowers--tr { top: 18px; right: 14px; scale: -1 1; }
+#invite { padding-top: 136px; }
+.corner-flowers--bl { bottom: 18px; left: 14px; }
+#contactsSection { padding-bottom: 136px; }
 @keyframes sway { 0%, 100% { rotate: -2deg; } 50% { rotate: 2.5deg; } }
 @keyframes swayFlip { 0%, 100% { rotate: 178deg; } 50% { rotate: 182.5deg; } }
 .garland { width: 240px; height: auto; margin: 0 auto 26px; filter: drop-shadow(0 4px 6px rgba(70, 50, 30, .14)); user-select: none; }
@@ -745,3 +747,198 @@ html[lang="ar"] .footer__names { font-size: 36px; }
   .section { padding: 60px 20px; }
   .countdown span { font-size: 38px; }
 }
+
+
+/* =========================================================
+   v3 — старинный 3D-конверт, окно с видом, светящиеся имена
+   ========================================================= */
+@property --rx { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@property --ry { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+/* ---- Цветы всегда целиком в кадре (без обрезанных краёв) ---- */
+.intro__corner { width: min(44vw, 230px); }
+.intro__corner--tl { top: 54px; left: 8px; }
+.intro__corner--br { bottom: 10px; right: 8px; }
+.arch__flowers { width: 138px; }
+.arch__flowers--tl { top: -18px; left: -20px; z-index: 3; }
+.arch__flowers--br { bottom: -32px; right: -20px; z-index: 3; }
+.env-flowers { width: 40%; bottom: -15%; z-index: 7; }
+.env-flowers--l { left: -5%; }
+.env-flowers--r { right: -5%; }
+
+/* ---- Сцена конверта ---- */
+.env-float {
+  animation: none;
+  perspective: 1100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.env-tilt {
+  transform: rotateX(calc(14deg + var(--rx))) rotateY(var(--ry));
+  transition: transform .35s ease-out;
+  animation: float 5s ease-in-out infinite;
+  transform-style: flat;
+}
+@media (hover: none) {
+  .env-tilt { animation: float 5s ease-in-out infinite, tiltIdle 8s ease-in-out infinite; }
+}
+@keyframes tiltIdle { 0%, 100% { --ry: -8deg; --rx: 2deg; } 50% { --ry: 8deg; --rx: -2deg; } }
+.intro.is-open .env-tilt { animation: none; --rx: -14deg; --ry: 0deg; transition: transform .9s ease, --rx .9s ease, --ry .9s ease; }
+.env-shadow {
+  width: 78%;
+  height: 26px;
+  margin-top: 18px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(70, 45, 20, .38), rgba(70, 45, 20, 0));
+  animation: shadowFloat 5s ease-in-out infinite;
+  transition: opacity .6s ease 1.9s;
+}
+@keyframes shadowFloat { 50% { scale: .9 1; opacity: .7; } }
+.intro.is-open .env-shadow { opacity: 0; }
+
+.envelope { --w: min(84vw, 360px); }
+.envelope::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  border-radius: 3px;
+  box-shadow: inset 0 0 26px rgba(110, 70, 30, .30), inset 0 0 3px rgba(90, 55, 25, .35);
+}
+.envelope__back {
+  border-radius: 3px;
+  background:
+    linear-gradient(rgba(80, 50, 25, .26), rgba(80, 50, 25, .14)),
+    url("img/paper.webp") 0 0 / 320px;
+  box-shadow: 0 26px 40px -14px rgba(60, 38, 18, .45), 0 2px 4px rgba(60, 38, 18, .2);
+}
+.envelope__letter {
+  background:
+    linear-gradient(rgba(255, 252, 246, .84), rgba(255, 252, 246, .84)),
+    url("img/paper.webp") 40px 40px / 300px;
+}
+
+/* лицевая сторона: три клапана со своими тенями */
+.envelope__front { background: none; clip-path: none; }
+.fold { position: absolute; inset: 0; display: block; }
+.fold::before { content: ""; position: absolute; inset: 0; background: url("img/paper.webp") 0 0 / 320px; }
+.fold--l { filter: drop-shadow(1px 0 2px rgba(70, 45, 20, .30)); }
+.fold--l::before {
+  clip-path: polygon(0 0, 53% 54%, 0 100%);
+  background-image: linear-gradient(100deg, rgba(255, 250, 238, .22), rgba(120, 80, 40, .05)), url("img/paper.webp");
+}
+.fold--r { filter: drop-shadow(-1px 0 2px rgba(70, 45, 20, .30)); }
+.fold--r::before {
+  clip-path: polygon(100% 0, 47% 54%, 100% 100%);
+  background-image: linear-gradient(260deg, rgba(100, 65, 30, .14), rgba(100, 65, 30, .04)), url("img/paper.webp");
+}
+.fold--b { filter: drop-shadow(0 -2px 3px rgba(70, 45, 20, .32)); }
+.fold--b::before {
+  clip-path: polygon(0 100%, 6% 92%, 50% 46%, 94% 92%, 100% 100%);
+  background-image: linear-gradient(0deg, rgba(255, 250, 238, .16), rgba(120, 80, 40, .10)), url("img/paper.webp");
+  background-position: 30px 10px;
+}
+
+/* верхний клапан */
+.envelope__flap {
+  background: none;
+  clip-path: none;
+  filter: drop-shadow(0 3px 3px rgba(60, 38, 18, .35));
+}
+.envelope__flap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 54% 96%, 50% 100%, 46% 96%);
+  background:
+    linear-gradient(180deg, rgba(90, 60, 28, .10), rgba(255, 250, 238, .14)),
+    url("img/paper.webp") 10px 0 / 320px;
+}
+
+/* сургучная печать */
+.seal {
+  width: 92px;
+  height: 92px;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  z-index: 6;
+}
+.seal::before { display: none; }
+.seal img { width: 100%; height: 100%; filter: drop-shadow(0 4px 5px rgba(50, 12, 12, .45)); pointer-events: none; }
+.seal::after { inset: 2px; border-color: rgba(150, 45, 45, .55); }
+
+/* ---- Окно с видом на мечеть ---- */
+.arch {
+  background: #fcf8f0;
+  padding: 9px;
+  box-shadow: 0 20px 44px -16px rgba(70, 45, 20, .35), 0 2px 6px rgba(70, 45, 20, .12);
+}
+.window {
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  background:
+    linear-gradient(180deg, rgba(45, 25, 15, .06) 0%, rgba(45, 25, 15, .30) 34%, rgba(45, 25, 15, .26) 52%, rgba(45, 25, 15, .08) 66%, rgba(28, 16, 10, .62) 100%),
+    url("img/window-view.webp") center 68% / cover no-repeat;
+  box-shadow: inset 0 0 0 1px rgba(176, 144, 90, .65), inset 0 14px 30px rgba(0, 0, 0, .30), inset 0 -6px 18px rgba(0, 0, 0, .18);
+}
+.window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .20) 0%, rgba(255, 255, 255, .05) 28%, transparent 40%);
+}
+.window > * { position: relative; z-index: 1; }
+
+/* ---- Светящиеся имена ---- */
+.names > span:not(.amp) {
+  background: linear-gradient(100deg, #fff1d0 0%, #f5d796 22%, #fffaf0 42%, #ecc47c 62%, #fff1d0 82%, #f5d796 100%) 0 0 / 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 10px rgba(255, 212, 140, .70)) drop-shadow(0 2px 7px rgba(35, 18, 8, .60));
+  animation: shimmer 7s linear infinite;
+  padding: 0 .08em;
+}
+.names .amp { color: #f7dca2; filter: drop-shadow(0 0 8px rgba(255, 212, 140, .85)) drop-shadow(0 1px 4px rgba(35, 18, 8, .5)); }
+@keyframes shimmer { to { background-position: -220% 0; } }
+.hero__date { color: #fff8ea; text-shadow: 0 1px 8px rgba(25, 12, 6, .7); }
+.hero__city { color: #f7e6c8; text-shadow: 0 1px 6px rgba(25, 12, 6, .7); }
+
+.footer__names {
+  background: linear-gradient(100deg, #7d6133 0%, #b8914f 30%, #7d6133 55%, #a8823f 80%, #7d6133 100%) 0 0 / 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 9s linear infinite;
+}
+
+/* ---- Арабские имена: каллиграфия руква, но читаемая ---- */
+html[lang="ar"] .names,
+html[lang="ar"] .footer__names,
+html[lang="ar"] .letter__names { font-family: "Aref Ruqaa", "Amiri", serif; font-style: normal; }
+html[lang="ar"] .names { font-weight: 700; font-size: clamp(50px, 15vw, 66px); line-height: 1.35; }
+html[lang="ar"] .names .amp { font-size: .6em; }
+html[lang="ar"] .footer__names { font-size: 44px; font-weight: 700; line-height: 1.5; }
+html[lang="ar"] .letter__names { font-size: 22px; font-weight: 700; }
+
+/* ---- После открытия письмо стоит ~2 секунды, потом всё уходит ---- */
+.intro { transition: opacity .9s ease 4.1s, visibility 0s linear 5s; }
+.envelope { transition: transform .9s cubic-bezier(.5,0,.75,0) 3.9s, opacity .7s ease 4s; }
+.intro.is-open .intro__corner { transition: opacity .8s ease 3.7s; }
+.env-flowers { transition: transform 1s ease 3.6s, opacity .8s ease 3.6s; }
+.env-shadow { transition: opacity .6s ease 3.9s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .env-tilt, .env-shadow, .names > span, .footer__names { animation: none !important; }
+  .intro, .envelope, .intro__corner, .env-flowers, .env-shadow { transition-duration: .01s !important; transition-delay: 0s !important; }
+}
+
+/* ---- Тонкая подстройка окна и конверта ---- */
+.envelope { --w: min(84vw, 420px); }
+.window { padding-top: 52px; padding-bottom: 40px; }
+.names > span:not(.amp) { filter: drop-shadow(0 0 10px rgba(255, 212, 140, .70)) drop-shadow(0 2px 8px rgba(30, 15, 6, .78)); }

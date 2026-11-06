@@ -8,8 +8,10 @@
   <meta name="theme-color" content="#f6f1e8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Marck+Script&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Marck+Script&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="img/bouquet.webp" type="image/webp">
+  <link rel="preload" as="image" href="img/paper.webp" type="image/webp">
+  <link rel="preload" as="image" href="img/seal.webp" type="image/webp">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="locked">
@@ -27,6 +29,7 @@
     <img class="intro__corner intro__corner--tl" src="img/bouquet.webp" alt="" aria-hidden="true" decoding="async">
     <img class="intro__corner intro__corner--br" src="img/bouquet.webp" alt="" aria-hidden="true" decoding="async">
     <div class="env-float">
+    <div class="env-tilt" id="envTilt">
     <div class="envelope" id="envelope">
       <div class="envelope__back"></div>
       <div class="envelope__letter">
@@ -34,14 +37,16 @@
         <span class="script" data-t="invited">Siz taklif etilgansiz</span>
         <span class="letter__names"><span data-t="groom">Ibrohim</span> <span data-t="amp">&amp;</span> <span data-t="bride">Ruqayya</span></span>
       </div>
-      <div class="envelope__front"></div>
+      <div class="envelope__front"><i class="fold fold--l"></i><i class="fold fold--r"></i><i class="fold fold--b"></i></div>
       <div class="envelope__flap"></div>
       <button class="seal" id="openBtn" data-t-aria="open">
-        <span id="sealInitials">I&amp;R</span>
+        <img src="img/seal.webp" alt="" width="160" height="160" decoding="async">
       </button>
       <img class="env-flowers env-flowers--l" src="img/bouquet.webp" alt="" aria-hidden="true" decoding="async">
       <img class="env-flowers env-flowers--r" src="img/bouquet.webp" alt="" aria-hidden="true" decoding="async">
     </div>
+    </div>
+    <div class="env-shadow" aria-hidden="true"></div>
     </div>
     <p class="intro__hint" data-t="hint">Нажмите на печать, чтобы открыть</p>
   </div>
@@ -61,7 +66,7 @@
       <div class="arch reveal" style="--d:.35s">
         <img class="arch__flowers arch__flowers--tl" src="img/bouquet.webp" alt="" aria-hidden="true" decoding="async">
         <img class="arch__flowers arch__flowers--br" src="img/bouquet.webp" alt="" aria-hidden="true" decoding="async">
-        <div class="arch__inner">
+        <div class="arch__inner window">
           <img class="garland arch__garland" src="img/garland.webp" alt="" aria-hidden="true" decoding="async">
           <h1 class="names">
             <span class="reveal" style="--d:.7s" data-t="groom">Ibrohim</span>
