@@ -190,9 +190,9 @@ function setLang(lang) {
   $("#timeRange").textContent = CONFIG.endTime ? `${startTime} — ${CONFIG.endTime}` : `${T.startsAt} ${startTime}`;
   $("#mapWrap iframe")?.setAttribute("title", T.map);
 
-  renderCalendar();
-  renderWishes();
-  renderContacts();
+  [renderWishes, renderContacts, renderCalendar].forEach((fn) => {
+    try { fn(); } catch (err) { console.error(err); }
+  });
 }
 
 document.querySelectorAll(".lang button").forEach((b) =>
