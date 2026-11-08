@@ -2,8 +2,7 @@
    ОБЩИЕ ДАННЫЕ (одинаковые для всех языков)
    ========================================================= */
 const CONFIG = {
-  date: "2026-11-14T12:00",     // дата и время начала (ГГГГ-ММ-ДДTЧЧ:ММ)
-  endTime: "15:00",             // время окончания (можно оставить пустым)
+  date: "2026-11-13T14:00",     // самая ранняя дата и время (ГГГГ-ММ-ДДTЧЧ:ММ); у каждого места ниже своя дата
   timezone: "+03:00",           // часовой пояс места (Стамбул) — для точного отсчёта у гостей из других стран
 
   // Места проведения: для мужчин и отдельно для женщин
@@ -11,16 +10,18 @@ const CONFIG = {
     {
       who: "men",
       name: "OZKAD",
+      date: "2026-11-13",
       address: "Kayabaşı, Kayaşehir Blv Seyran Şehir Cadde Dükkanları D:2 Blok No:29, 34494 Başakşehir/İstanbul",
-      time: "12:00 — 15:00",
+      time: "14:00",
       mapLink: "https://www.google.com/maps/search/?api=1&query=OZKAD%2C%20Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul",
       mapEmbed: "https://maps.google.com/maps?q=OZKAD%2C%20Kayaba%C5%9F%C4%B1%2C%20Kaya%C5%9Fehir%20Blv%20Seyran%20%C5%9Eehir%20Cadde%20D%C3%BCkkanlar%C4%B1%20D%3A2%20Blok%20No%3A29%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul&z=17&output=embed",
     },
     {
       who: "women",
       name: "GÜVERCİNTEPE SULTAN BEYAZIT CAMİİ",
+      date: "2026-11-14",
       address: "Güvercintepe, Yaman Sk. No:15, 34494 Başakşehir/İstanbul",
-      time: "15:30",
+      time: "14:00",
       mapLink: "https://www.google.com/maps/search/?api=1&query=G%C3%9CVERC%C4%B0NTEPE%20SULTAN%20BEYAZIT%20CAM%C4%B0%C4%B0%2C%20G%C3%BCvercintepe%2C%20Yaman%20Sk.%20No%3A15%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul",
       mapEmbed: "https://maps.google.com/maps?q=G%C3%9CVERC%C4%B0NTEPE%20SULTAN%20BEYAZIT%20CAM%C4%B0%C4%B0%2C%20G%C3%BCvercintepe%2C%20Yaman%20Sk.%20No%3A15%2C%2034494%20Ba%C5%9Fak%C5%9Fehir/%C4%B0stanbul&z=17&output=embed",
     },
@@ -166,7 +167,7 @@ const store = {
   set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
 };
 
-const wedding = new Date(CONFIG.date);
+let wedding = new Date(CONFIG.date);
 let weddingAbs = new Date(`${CONFIG.date}:00${CONFIG.timezone || ""}`);
 
 /* ---------- Для кого приглашение: мужчины / женщины (?for=men | ?for=women) ---------- */
@@ -176,16 +177,26 @@ function setAudience(who) {
   audience = who || "";
   document.documentElement.dataset.for = audience;
   const v = CONFIG.venues.find((x) => x.who === audience);
-  const start = v ? v.time.slice(0, 5) : CONFIG.date.slice(11, 16);
-  weddingAbs = new Date(`${CONFIG.date.slice(0, 10)}T${start}:00${CONFIG.timezone || ""}`);
+  const start = v ? `${v.date}T${v.time.slice(0, 5)}` : CONFIG.date;
+  wedding = new Date(start);
+  weddingAbs = new Date(`${start}:00${CONFIG.timezone || ""}`);
+  renderHeroDate();
+  try { renderCalendar(); } catch (err) { console.error(err); }
   const lf = $("#letterFor");
   if (lf) { lf.dataset.t = audience; lf.textContent = audience ? T[audience] : ""; }
 }
-const startTime = `${pad(wedding.getHours())}:${pad(wedding.getMinutes())}`;
 let T = TEXT[CONFIG.defaultLang];
 
 /* ---------- Неизменные данные ---------- */
-$("#heroDate").textContent = `${pad(wedding.getDate())} · ${pad(wedding.getMonth() + 1)} · ${wedding.getFullYear()}`;
+/* Дата в шапке: своя для мужчин/женщин; если приглашение не выбрано — обе (13–14 · 11 · 2026) */
+function renderHeroDate() {
+  const days = audience ? [wedding.getDate()] : weddingDays();
+  $("#heroDate").textContent = `${days.map(pad).join("–")} · ${pad(wedding.getMonth() + 1)} · ${wedding.getFullYear()}`;
+}
+function weddingDays() {
+  return [...new Set(CONFIG.venues.map((v) => Number(v.date.slice(8, 10))))].sort((a, b) => a - b);
+}
+renderHeroDate();
 $("#ayahArabic").textContent = CONFIG.ayahArabic;
 /* ---------- Места проведения (мужчины / женщины) ---------- */
 $("#venues").innerHTML = CONFIG.venues.map((v) => `
@@ -240,7 +251,7 @@ function renderCalendar() {
   const days = new Date(y, m + 1, 0).getDate();
   for (let i = 0; i < offset; i++) html += '<div class="d"></div>';
   for (let d = 1; d <= days; d++) {
-    html += d === wedding.getDate()
+    html += (audience ? [wedding.getDate()] : weddingDays()).includes(d)
       ? `<div class="d is-day" aria-label="${T.weddingDay}">${heart}<b>${d}</b></div>`
       : `<div class="d">${d}</div>`;
   }
